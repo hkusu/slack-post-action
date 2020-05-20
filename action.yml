@@ -54,8 +54,6 @@ inputs:
 outputs:
   result:
     description: 'result'
-  debug:
-    description: 'debug'
 runs:
   using: 'node12'
   main: 'dist/index.js'
