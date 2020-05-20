@@ -1323,8 +1323,6 @@ async function run() {
     const title = core.getInput('title');
     const titleLink = core.getInput('title_link');
 
-    //github.context.payload
-
     data = {
       "channel": channel,
       "username": "GitHub Actions",
@@ -1338,7 +1336,7 @@ async function run() {
           "author_icon": authorIcon,
           "title": title,
           "title_link": titleLink,
-          "footer": "<${{ github.event.repository.html_url }}|${{ github.repository }}>",
+          "footer": `<${github.context.payload.repository.html_url}|${github.context.payload.repository.full_name}>`,
           "ts": Math.floor(new Date().getTime() / 1000),
         }
       ]
@@ -1355,9 +1353,9 @@ async function run() {
       },
     });
 
-    console.log(res.data);
-
-    core.setOutput("debug", JSON.stringify(github));
+    if (!res.data.ok) {
+      throw new Error(res.data.error);
+    }
 
     core.setOutput("result", 'success');
   }
