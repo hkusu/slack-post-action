@@ -35,6 +35,8 @@ See Usage.
   run: echo '${{ steps.slack.outputs.result }}'
 ```
 
+![image](./doc/image.png)
+
 ## License
 
 MIT
