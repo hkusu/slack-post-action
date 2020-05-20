@@ -17,11 +17,6 @@ async function run() {
     const fields = core.getInput('fields');
     const actions = core.getInput('actions');
 
-
-    console.log(fields);
-    console.log(actions);
-
-
     data = {
       "channel": channel,
       "username": "GitHub Actions",
@@ -35,10 +30,10 @@ async function run() {
           "author_icon": authorIcon,
           "title": title,
           "title_link": titleLink,
-          "fields": fields,
+          "fields": JSON.stringify(fields),
           "footer": `<${github.context.payload.repository.html_url}|${github.context.payload.repository.full_name}>`,
           "ts": Math.floor(new Date().getTime() / 1000),
-          "actions": actions,
+          "actions": JSON.stringify(actions),
         }
       ]
     };
