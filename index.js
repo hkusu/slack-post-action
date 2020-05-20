@@ -17,6 +17,11 @@ async function run() {
     const fields = core.getInput('fields');
     const actions = core.getInput('actions');
 
+
+    console.log(fields);
+    console.log(actions);
+
+
     data = {
       "channel": channel,
       "username": "GitHub Actions",
