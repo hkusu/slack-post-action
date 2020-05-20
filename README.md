@@ -4,11 +4,11 @@ This is the action to post to slack.
 
 ## Inputs
 
-See `action.ym.`.
+See Usage.
 
 ## Outputs
 
-See `action.ym.`.
+See Usage.
 
 ## Usage
 
