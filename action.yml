@@ -9,7 +9,7 @@ inputs:
     required: true
   text:
     description: 'text'
-    required: true
+    required: false
   username:
     description: 'username'
     required: false

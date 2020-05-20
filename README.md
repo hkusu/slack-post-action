@@ -15,12 +15,12 @@ See Usage.
 ```yaml
 - name: Post to Slack
   id: slack
-  uses: hkusu/slack-post-action@v0.1.1
+  uses: hkusu/slack-post-action@v0.1.2
   env:
     SLACK_APP_TOKEN: ${{ secrets.SLACK_APP_TOKEN }} # your slack app token
   with:
     channel: 'greeting-channel'
-    text: 'Hello World!'
+    text: 'Hello World!' # option
     username: 'GitHub Actions' # option (default: GitHub Actions)
     icon_url: 'https://github.com/actions.png?size=48' # option (default: https://github.com/actions.png?size=48)
     color: 'good' # option (good or warning or danger or hex color code like `#ffaabb`)
