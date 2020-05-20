@@ -25,6 +25,12 @@ inputs:
   title_link:
     description: 'title link'
     required: false
+  footer:
+    description: 'footer'
+    required: false
+  footer_icon:
+    description: 'footer icon'
+    required: false
   fields:
     description: 'fields'
     required: false

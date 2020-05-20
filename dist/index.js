@@ -1322,13 +1322,22 @@ async function run() {
     const authorIcon = core.getInput('author_icon');
     const title = core.getInput('title');
     const titleLink = core.getInput('title_link');
-    const fields = core.getInput('fields');
-    const actions = core.getInput('actions');
+    let footer = core.getInput('footer');
+    const footerIcon = core.getInput('footer_icon');
+    let fields = core.getInput('fields');
+    let actions = core.getInput('actions');
 
+    if (footer == '') {
+      footer = `<${github.context.payload.repository.html_url}|${github.context.payload.repository.full_name}>`
+    }
 
-    console.log(fields);
-    console.log(actions);
+    if (fields != '') {
+      fields = JSON.parse(fields)
+    }
 
+    if (actions != '') {
+      actions = JSON.parse(actions)
+    }
 
     data = {
       "channel": channel,
@@ -1344,7 +1353,8 @@ async function run() {
           "title": title,
           "title_link": titleLink,
           "fields": fields,
-          "footer": `<${github.context.payload.repository.html_url}|${github.context.payload.repository.full_name}>`,
+          "footer": footer,
+          "footer_icon": footerIcon,
           "ts": Math.floor(new Date().getTime() / 1000),
           "actions": actions,
         }

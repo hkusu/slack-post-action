@@ -18,13 +18,17 @@ See Usage.
   uses: hkusu/slack-post-action@v0.1.0
   with:
     channel: 'hello-channel'
-    text:  'Hello World!'
+    text: 'Hello World!'
     color: 'good' # option
-    author_name: '' # option
-    author_link:  '' # option
-    author_icon:  '' # option
-    title:  '' # option
-    title_link:  '' # option
+    author_name: 'hkusu' # option
+    author_link: 'https://github.com/hkusu' # option
+    author_icon: 'https://github.com/hkusu.png' # option
+    title: 'This is my action' # option
+    title_link: 'https://github.com/hkusu/slack-post-action' # option
+    footer: 'my action' # option
+    footer_icon: 'https://github.com/hkusu/slack-post-action' # option
+    fields: '[{ "title": "App", "value": "my app", "short": true }]' # option
+    actions: '[{ "type": "button", "text": "Show action", "url": "https://github.com/hkusu/slack-post-action" }]' # option
 - name: Show result
   run: echo '${{ steps.slack.outputs.result }}'
 ```
