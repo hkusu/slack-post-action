@@ -21,6 +21,8 @@ See Usage.
   with:
     channel: 'hello-channel'
     text: 'Hello World!'
+    username: 'GitHub Actions' # option (default: GitHub Actions)
+    icon_url: 'https://github.com/actions.png?size=48' # option (default: https://github.com/actions.png?size=48)
     color: 'good' # option
     author_name: 'hkusu' # option
     author_link: 'https://github.com/hkusu' # option

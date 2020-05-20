@@ -1316,6 +1316,8 @@ async function run() {
   try { 
     const channel = core.getInput('channel');
     const text = core.getInput('text');
+    const username = core.getInput('username');
+    const iconUrl = core.getInput('icon_url');
     const color = core.getInput('color');
     const authorName = core.getInput('author_name');
     const authorLink = core.getInput('author_link');
@@ -1341,8 +1343,8 @@ async function run() {
 
     data = {
       "channel": channel,
-      "username": "GitHub Actions",
-      "icon_url": "https://github.com/actions.png?size=48",
+      "username": username,
+      "icon_url": iconUrl,
       "text": text,
       "attachments": [
         {
