@@ -25,6 +25,12 @@ inputs:
   title_link:
     description: 'title_link'
     required: false
+  fields:
+    description: 'fields'
+    required: false
+  actions:
+    description: 'actions'
+    required: false
 outputs:
   result:
     description: 'result'

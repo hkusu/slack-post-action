@@ -1322,6 +1322,8 @@ async function run() {
     const authorIcon = core.getInput('author_icon');
     const title = core.getInput('title');
     const titleLink = core.getInput('title_link');
+    const fields = core.getInput('fields');
+    const actions = core.getInput('actions');
 
     data = {
       "channel": channel,
@@ -1336,8 +1338,10 @@ async function run() {
           "author_icon": authorIcon,
           "title": title,
           "title_link": titleLink,
+          "fields": fields,
           "footer": `<${github.context.payload.repository.html_url}|${github.context.payload.repository.full_name}>`,
           "ts": Math.floor(new Date().getTime() / 1000),
+          "actions": actions,
         }
       ]
     };
