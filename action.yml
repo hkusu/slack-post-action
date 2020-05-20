@@ -23,7 +23,7 @@ inputs:
     description: 'title'
     required: false
   title_link:
-    description: 'title_link'
+    description: 'title link'
     required: false
   fields:
     description: 'fields'
