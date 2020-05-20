@@ -1,5 +1,8 @@
 name: 'post slack action'
 description: 'Post to Slack'
+branding:
+  icon: 'bell'
+  color: 'white'
 inputs:
   channel:
     description: 'channel'
