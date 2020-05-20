@@ -1,0 +1,35 @@
+name: 'post slack action'
+description: 'Post to Slack'
+inputs:
+  channel:
+    description: 'channel'
+    required: true
+  text:
+    description: 'text'
+    required: true
+  color:
+    description: 'color'
+    required: false
+  author_name:
+    description: 'author name'
+    required: false
+  author_link:
+    description: 'author link'
+    required: false
+  author_icon:
+    description: 'author icon'
+    required: false
+  title:
+    description: 'title'
+    required: false
+  title_link:
+    description: 'title_link'
+    required: false
+outputs:
+  result:
+    description: 'result'
+  debug:
+    description: 'debug'
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
