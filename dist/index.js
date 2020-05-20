@@ -1324,6 +1324,7 @@ async function run() {
     const authorIcon = core.getInput('author_icon');
     const title = core.getInput('title');
     const titleLink = core.getInput('title_link');
+    const body = core.getInput('body');
     let footer = core.getInput('footer');
     const footerIcon = core.getInput('footer_icon');
     let fields = core.getInput('fields');
@@ -1354,6 +1355,7 @@ async function run() {
           "author_icon": authorIcon,
           "title": title,
           "title_link": titleLink,
+          "text": body,
           "fields": fields,
           "footer": footer,
           "footer_icon": footerIcon,

@@ -36,6 +36,9 @@ inputs:
   title_link:
     description: 'title link'
     required: false
+  body:
+    description: 'body'
+    required: false
   footer:
     description: 'footer'
     required: false
