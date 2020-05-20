@@ -25,9 +25,9 @@ async function run() {
       "attachments": [
         {
           "color": color,
-          "author_name": author_name,
-          "author_link": author_link,
-          "author_icon": author_icon,
+          "author_name": authorName,
+          "author_link": authorLink,
+          "author_icon": authorIcon,
           "title": title,
           "title_link": titleLink,
           "footer": "<${{ github.event.repository.html_url }}|${{ github.repository }}>",
