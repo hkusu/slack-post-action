@@ -25,8 +25,8 @@ See Usage.
     author_icon: 'https://github.com/hkusu.png' # option
     title: 'This is my action' # option
     title_link: 'https://github.com/hkusu/slack-post-action' # option
-    footer: 'my action' # option
-    footer_icon: 'https://github.com/hkusu/slack-post-action' # option
+    footer: 'my action' # option (default: repository name)
+    footer_icon: 'https://github.com/hkusu.png' # option
     fields: '[{ "title": "App", "value": "my app", "short": true }]' # option
     actions: '[{ "type": "button", "text": "Show action", "url": "https://github.com/hkusu/slack-post-action" }]' # option
 - name: Show result
