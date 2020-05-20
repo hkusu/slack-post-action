@@ -15,7 +15,7 @@ See Usage.
 ```yaml
 - name: Post to Slack
   id: slack
-  uses: hkusu/slack-post-action@v0.1.0
+  uses: hkusu/slack-post-action@v0.1.1
   env:
     SLACK_APP_TOKEN: ${{ secrets.SLACK_APP_TOKEN }} # your slack app token
   with:
