@@ -13,11 +13,9 @@ inputs:
   username:
     description: 'username'
     required: false
-    default: 'GitHub Actions'
   icon_url:
     description: 'icon url'
     required: false
-    default: 'https://github.com/actions.png?size=48'
   color:
     description: 'color'
     required: false
