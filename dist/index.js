@@ -1315,9 +1315,9 @@ const SLACK_APP_TOKEN = process.env['SLACK_APP_TOKEN'];
 async function run() {
   try { 
     const channel = core.getInput('channel');
-    const text = core.getInput('text');
-    const username = core.getInput('username');
-    const iconUrl = core.getInput('icon_url');
+    const message = core.getInput('message');
+    const userName = core.getInput('user_name');
+    const userIcon = core.getInput('user_icon');
     const color = core.getInput('color');
     const authorName = core.getInput('author_name');
     const authorLink = core.getInput('author_link');
@@ -1344,9 +1344,9 @@ async function run() {
 
     data = {
       "channel": channel,
-      "username": username,
-      "icon_url": iconUrl,
-      "text": text,
+      "username": userName,
+      "icon_url": userIcon,
+      "text": message,
       "attachments": [
         {
           "color": color,

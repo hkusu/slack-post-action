@@ -7,14 +7,14 @@ inputs:
   channel:
     description: 'channel'
     required: true
-  text:
-    description: 'text'
+  message:
+    description: 'message'
     required: false
-  username:
-    description: 'username'
+  user_name:
+    description: 'user name'
     required: false
-  icon_url:
-    description: 'icon url'
+  user_icon:
+    description: 'user icon'
     required: false
   color:
     description: 'color'
