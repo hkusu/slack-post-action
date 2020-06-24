@@ -1325,9 +1325,11 @@ async function run() {
     const title = core.getInput('title');
     const titleLink = core.getInput('title_link');
     const body = core.getInput('body');
+    let fields = core.getInput('fields');
+    const image = core.getInput('image');
+    const thumbnail = core.getInput('thumbnail');
     let footer = core.getInput('footer');
     const footerIcon = core.getInput('footer_icon');
-    let fields = core.getInput('fields');
     let actions = core.getInput('actions');
 
     if (footer == '') {
@@ -1357,6 +1359,8 @@ async function run() {
           "title_link": titleLink,
           "text": body,
           "fields": fields,
+          "image_url": image,
+          "thumb_url": thumbnail,
           "footer": footer,
           "footer_icon": footerIcon,
           "ts": Math.floor(new Date().getTime() / 1000),
