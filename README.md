@@ -40,8 +40,8 @@ See Usage.
 
 ![image](./doc/image.png)
 
-You can also use `image` or `thumbnail`.
-See also https://api.slack.com/reference/messaging/attachments
+You can also use `image` or `thumbnail` for input.
+See also https://api.slack.com/reference/messaging/attachments .
 
 ## License
 
