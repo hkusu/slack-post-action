@@ -24,16 +24,38 @@ async function run() {
     const footerIcon = core.getInput('footer_icon');
     let actions = core.getInput('actions');
 
-    if (footer == '') {
-      footer = `<${github.context.payload.repository.html_url}|${github.context.payload.repository.full_name}>`
+    if (fields != '') {
+      fields = JSON.parse(fields);
     }
 
-    if (fields != '') {
-      fields = JSON.parse(fields)
+    if (footer == '') {
+      footer = `<${github.context.payload.repository.html_url}|${github.context.payload.repository.full_name}>`;
     }
 
     if (actions != '') {
-      actions = JSON.parse(actions)
+      actions = JSON.parse(actions);
+    }
+
+    let attachments;
+    if (authorName == '' && title == '' && body == '' && fields == '' && image == '' && thumbnail == '' && actions == '') {
+      attachments = {};
+    } else {
+      attachments = {
+        "color": color,
+        "author_name": authorName,
+        "author_link": authorLink,
+        "author_icon": authorIcon,
+        "title": title,
+        "title_link": titleLink,
+        "text": body,
+        "fields": fields,
+        "image_url": image,
+        "thumb_url": thumbnail,
+        "footer": footer,
+        "footer_icon": footerIcon,
+        "ts": Math.floor(new Date().getTime() / 1000),
+        "actions": actions,
+      };
     }
 
     data = {
@@ -41,24 +63,7 @@ async function run() {
       "username": userName,
       "icon_url": userIcon,
       "text": message,
-      "attachments": [
-        {
-          "color": color,
-          "author_name": authorName,
-          "author_link": authorLink,
-          "author_icon": authorIcon,
-          "title": title,
-          "title_link": titleLink,
-          "text": body,
-          "fields": fields,
-          "image_url": image,
-          "thumb_url": thumbnail,
-          "footer": footer,
-          "footer_icon": footerIcon,
-          "ts": Math.floor(new Date().getTime() / 1000),
-          "actions": actions,
-        }
-      ]
+      "attachments": [attachments]
     };
 
     const res = await axios({
