@@ -332,7 +332,7 @@ if (NODE_ENV != 'local') {
     footer: core.getInput('footer'),
     footerIcon: core.getInput('footer_icon'),
     actions: core.getInput('actions'),
-    eventJson: core.getInput('event-json'),
+    event: core.getInput('event'),
   };
 } else {
   event = {
@@ -362,15 +362,14 @@ if (NODE_ENV != 'local') {
     footer: '',
     footerIcon: '',
     actions: '[{ "type": "button", "text": "Show action", "url": "https://github.com/hkusu/slack-post-action" }]',
-    eventJson: JSON.stringify(event),
+    event: JSON.stringify(event),
   };
 }
 
 async function run(input) {
 
-  let event;
   try {
-    event = JSON.parse(input.eventJson);
+    input.event = JSON.parse(input.event);
   } catch (e) {
     throw new Error('Set "event_json" correctly.');
   }
@@ -380,7 +379,7 @@ async function run(input) {
   }
 
   if (input.footer == '') {
-    input.footer = `<${event.repository.html_url}|${event.repository.full_name}>`;
+    input.footer = `<${input.event.repository.html_url}|${input.event.repository.full_name}>`;
   }
 
   if (input.footerIcon == '') {
