@@ -54,8 +54,8 @@ if (NODE_ENV != 'local') {
     fields: '[{ "title": "Action1", "value": "my action1", "short": true }, { "title": "Action2", "value": "my action2", "short": true }]',
     image: '',
     thumbnail: '',
-    footer: 'my action',
-    footerIcon: 'https://github.com/hkusu.png',
+    footer: '',
+    footerIcon: '',
     actions: '[{ "type": "button", "text": "Show action", "url": "https://github.com/hkusu/slack-post-action" }]',
     eventJson: JSON.stringify(event),
   };
@@ -79,7 +79,7 @@ async function run(input) {
   }
 
   if (input.footerIcon == '') {
-    input.footerIcon = `https://github.com/${event.repository.owner.login}`;
+    input.footerIcon = `https://github.com/${event.repository.owner.login}.png`;
   }
 
   if (input.actions != '') {
