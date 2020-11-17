@@ -1,63 +1,64 @@
-name: 'slack post action'
-description: 'Post to Slack'
+name: 'Slack Post Action'
+description: 'This is a GitHub Action to post to Slack.'
+author: 'Hiroyuki Kusu'
 branding:
   icon: 'bell'
   color: 'white'
 inputs:
   channel:
-    description: 'channel'
+    description: ''
     required: true
   message:
-    description: 'message'
+    description: ''
     required: false
   user_name:
-    description: 'user name'
+    description: ''
     required: false
   user_icon:
-    description: 'user icon'
+    description: ''
     required: false
   color:
-    description: 'color'
+    description: ''
     required: false
   author_name:
-    description: 'author name'
+    description: ''
     required: false
   author_link:
-    description: 'author link'
+    description: ''
     required: false
   author_icon:
-    description: 'author icon'
+    description: ''
     required: false
   title:
-    description: 'title'
+    description: ''
     required: false
   title_link:
-    description: 'title link'
+    description: ''
     required: false
   body:
-    description: 'body'
+    description: ''
     required: false
   fields:
-    description: 'fields'
+    description: ''
     required: false
   image:
-    description: 'image'
+    description: ''
     required: false
   thumbnail:
-    description: 'thumbnail'
+    description: ''
     required: false
   footer:
-    description: 'footer'
+    description: ''
     required: false
   footer_icon:
-    description: 'footer icon'
+    description: ''
     required: false
   actions:
-    description: 'actions'
+    description: ''
     required: false
 outputs:
   result:
-    description: 'result'
+    description: '`success` or `failure` is set.'
 runs:
   using: 'node12'
   main: 'dist/index.js'
