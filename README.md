@@ -24,7 +24,7 @@ This is a GitHub Action to post to Slack.
     body: 'This is body'
     fields: '[{ "title": "Action1", "value": "my action1", "short": true }, { "title": "Action2", "value": "my action2", "short": true }]'
     footer: 'my action' # default: repository name
-    footer_icon: 'https://github.com/hkusu.png'
+    footer_icon: 'https://github.com/hkusu.png' # default: repository owner image
     actions: '[{ "type": "button", "text": "Show action", "url": "https://github.com/hkusu/slack-post-action" }]'
 - name: Show result
   run: echo '${{ steps.slack.outputs.result }}' # success or failure

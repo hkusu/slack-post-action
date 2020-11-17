@@ -56,6 +56,10 @@ inputs:
   actions:
     description: ''
     required: false
+  event-json:
+    description: 'Specify when overriding GitHub events.'
+    default: ${{ toJson(github.event) }}
+    required: false
 outputs:
   result:
     description: '`success` or `failure` is set.'
