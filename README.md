@@ -1,14 +1,6 @@
-# slack post action
+# Slack Post Action
 
-This is the action to post to slack.
-
-## Inputs
-
-See Usage.
-
-## Outputs
-
-See Usage.
+This is a GitHub Action to post to Slack.
 
 ## Usage
 
