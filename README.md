@@ -5,14 +5,23 @@ This is a GitHub Action to post to Slack.
 ## Usage
 
 ```yaml
-- name: Post to Slack
-  id: slack
-  uses: hkusu/slack-post-action@v0.3.0
+- uses: hkusu/slack-post-action@v0.3.0
   env:
     SLACK_APP_TOKEN: ${{ secrets.SLACK_APP_TOKEN }} # your slack app token
   with:
-    channel: 'greeting-channel' # require (other parameters are optional)
-    message: 'Hello World!'
+    channel: 'greeting-channel'
+    message: 'Hello!'
+```
+
+All inputs except `channel` are **optional**, so use only the inputs you want to use:
+
+```yaml
+- uses: hkusu/slack-post-action@v0.3.0
+  env:
+    SLACK_APP_TOKEN: ${{ secrets.SLACK_APP_TOKEN }}
+  with:
+    channel: 'greeting-channel'
+    message: 'Hello!'
     user_name: 'GitHub Actions'
     user_icon: 'https://github.com/actions.png?size=48'
     color: 'good'
@@ -26,14 +35,29 @@ This is a GitHub Action to post to Slack.
     footer: 'my action' # default: repository name
     footer_icon: 'https://github.com/hkusu.png' # default: repository owner image
     actions: '[{ "type": "button", "text": "Show action", "url": "https://github.com/hkusu/slack-post-action" }]'
-- name: Show result
-  run: echo '${{ steps.slack.outputs.result }}' # success or failure
 ```
 
 ![image](./doc/image.png)
 
 You can also use `image` or `thumbnail` for input.
 See also https://api.slack.com/reference/messaging/attachments .
+
+### Result of action
+
+Use `result` outputs.
+
+```yaml
+- uses: hkusu/slack-post-action@v0.3.0
+  id: slack # specify id
+  env:
+    SLACK_APP_TOKEN: ${{ secrets.SLACK_APP_TOKEN }}
+  with:
+    channel: 'greeting-channel'
+    message: 'Hello!'
+- name: Show result
+  if: always()
+  run: echo '${{ steps.slack.outputs.result }}' # success or failure
+```
 
 ## License
 
