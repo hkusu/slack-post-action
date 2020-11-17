@@ -1,0 +1,24 @@
+name: Review Assign
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  post:
+    name: Use this action for check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v2
+      - name: Use this action
+        uses: ./
+        id: post
+        env:
+          SLACK_APP_TOKEN: ${{ secrets.SLACK_APP_TOKEN }}
+        with:
+          channel: 'CCU1QA6HL'
+          message: 'Hello World!'
+      - name: Show result
+        if: always()
+        run: echo '${{ steps.post.outputs.result }}'
