@@ -2,7 +2,7 @@
   "name": "slack-post-action",
   "version": "0.3.0",
   "description": "This is a GitHub Action to post to Slack.",
-  "main": "index.js",
+  "main": "src/main.js",
   "author": "Hiroyuki Kusu <kusu0806@gmail.com>",
   "license": "MIT",
   "repository": {
@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/hkusu/slack-post-action#readme",
   "scripts": {
-    "package": "ncc build index.js -o dist"
+    "package": "ncc build src/main.js -o dist"
   },
   "dependencies": {
     "@actions/core": "^1.2.6",
