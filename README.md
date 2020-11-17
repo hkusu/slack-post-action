@@ -2,14 +2,6 @@
 
 This is the action to post to slack.
 
-## Inputs
-
-See Usage.
-
-## Outputs
-
-See Usage.
-
 ## Usage
 
 ```yaml
