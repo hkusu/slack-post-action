@@ -335,7 +335,7 @@ if (NODE_ENV != 'local') {
     event: core.getInput('event'),
   };
 } else {
-  event = {
+  const event = {
     repository: {
       full_name: 'hkusu/slack-post-action',
       html_url: 'https://github.com/hkusu/slack-post-action',
@@ -383,7 +383,7 @@ async function run(input) {
   }
 
   if (input.footerIcon == '') {
-    input.footerIcon = `https://github.com/${event.repository.owner.login}.png`;
+    input.footerIcon = `https://github.com/${input.event.repository.owner.login}.png`;
   }
 
   if (input.actions != '') {
@@ -412,7 +412,7 @@ async function run(input) {
     };
   }
 
-  data = {
+  const data = {
     "channel": input.channel,
     "username": input.userName,
     "icon_url": input.userIcon,
