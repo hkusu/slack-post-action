@@ -9,7 +9,7 @@ This is a GitHub Action to post to Slack.
   env:
     SLACK_APP_TOKEN: ${{ secrets.SLACK_APP_TOKEN }} # your slack app token
   with:
-    channel: 'greeting-channel'
+    channel: 'my-greeting-channel'
     message: 'Hello!'
 ```
 
@@ -20,11 +20,11 @@ All inputs except `channel` are **optional**, so use only the inputs you want to
   env:
     SLACK_APP_TOKEN: ${{ secrets.SLACK_APP_TOKEN }}
   with:
-    channel: 'greeting-channel'
+    channel: 'my-greeting-channel'
     message: 'Hello!'
     user_name: 'GitHub Actions'
     user_icon: 'https://github.com/actions.png?size=48'
-    color: 'good'
+    color: 'good' # good or warning or danger or hex color code like #ffaabb
     author_name: 'hkusu'
     author_link: 'https://github.com/hkusu'
     author_icon: 'https://github.com/hkusu.png'
@@ -39,8 +39,7 @@ All inputs except `channel` are **optional**, so use only the inputs you want to
 
 ![image](./doc/image.png)
 
-You can also use `image` or `thumbnail` for input.
-See also https://api.slack.com/reference/messaging/attachments .
+You can also use `image` or `thumbnail` for input. See also https://api.slack.com/reference/messaging/attachments .
 
 ### Result of action
 
@@ -52,7 +51,7 @@ Use `result` outputs.
   env:
     SLACK_APP_TOKEN: ${{ secrets.SLACK_APP_TOKEN }}
   with:
-    channel: 'greeting-channel'
+    channel: 'my-greeting-channel'
     message: 'Hello!'
 - name: Show result
   if: always()
