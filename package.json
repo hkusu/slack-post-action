@@ -14,11 +14,11 @@
   },
   "homepage": "https://github.com/hkusu/slack-post-action#readme",
   "scripts": {
+    "local": "NODE_ENV=local node src/main.js",
     "package": "ncc build src/main.js -o dist"
   },
   "dependencies": {
     "@actions/core": "^1.2.6",
-    "@actions/github": "^2.2.0",
     "axios": "^0.19.2"
   },
   "devDependencies": {
