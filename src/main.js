@@ -84,14 +84,6 @@ async function run(input) {
     throw new Error('JSON parse error. "fields" input is invalid.');
   }
 
-  //if (input.footer == '') {
-  //  input.footer = `<${input.event.repository.html_url}|${input.event.repository.full_name}>`;
-  //}
-
-  //if (input.footerIcon == '') {
-  //  input.footerIcon = `https://github.com/${input.event.repository.owner.login}.png`;
-  //}
-
   try {
     input.actions = JSON.parse(input.actions);
   } catch (e) {

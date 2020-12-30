@@ -54,7 +54,7 @@ inputs:
     required: false
   footer_icon:
     description: ''
-    default: ${{ github.event.repository.owner.login }}.png
+    default: https://github.com/${{ github.event.repository.owner.login }}.png
     required: false
   actions:
     description: ''
