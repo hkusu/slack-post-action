@@ -444,7 +444,7 @@ async function run(input) {
   });
 
   if (!res.data.ok) {
-    throw new Error(res.data.error);
+    throw new Error(`Slack API error (message: ${res.data.error}).`);
   }
 }
 
