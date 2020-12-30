@@ -5,7 +5,7 @@ This is a GitHub Action to post to Slack.
 ## Usage
 
 ```yaml
-- uses: hkusu/slack-post-action@v0.3.0
+- uses: hkusu/slack-post-action@v1
   env:
     SLACK_APP_TOKEN: ${{ secrets.SLACK_APP_TOKEN }} # your slack app token
   with:
@@ -16,7 +16,7 @@ This is a GitHub Action to post to Slack.
 All inputs except `channel` are **optional**, so use only the inputs you want to use:
 
 ```yaml
-- uses: hkusu/slack-post-action@v0.3.0
+- uses: hkusu/slack-post-action@v1
   env:
     SLACK_APP_TOKEN: ${{ secrets.SLACK_APP_TOKEN }}
   with:
@@ -46,7 +46,7 @@ You can also use `image` or `thumbnail` for input. See also https://api.slack.co
 Use `result` outputs.
 
 ```yaml
-- uses: hkusu/slack-post-action@v0.3.0
+- uses: hkusu/slack-post-action@v1
   id: slack # specify id
   env:
     SLACK_APP_TOKEN: ${{ secrets.SLACK_APP_TOKEN }}

@@ -57,7 +57,7 @@ inputs:
     description: ''
     required: false
   event:
-    description: 'Specify when overriding GitHub events.'
+    description: ''
     default: ${{ toJson(github.event) }}
     required: false
 outputs:
