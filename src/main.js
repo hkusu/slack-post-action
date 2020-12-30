@@ -9,7 +9,7 @@ const SLACK_APP_TOKEN = process.env['SLACK_APP_TOKEN'];
 let input;
 if (NODE_ENV != 'local') {
   input = {
-    channel: core.getInput('channel'),
+    channel: core.getInput('channel', { required: true }),
     message: core.getInput('message'),
     userName: core.getInput('user_name'),
     userIcon: core.getInput('user_icon'),
@@ -65,11 +65,19 @@ async function run(input) {
   try {
     input.event = JSON.parse(input.event);
   } catch (e) {
-    throw new Error('Set "event_json" correctly.');
+    throw new Error('JSON parse error. "event" input is invalid.');
+  }
+
+  if (!input.event.repository) {
+    throw new Error('"event" input is invalid.');
   }
 
   if (input.fields != '') {
-    input.fields = JSON.parse(input.fields);
+    try {
+      input.fields = JSON.parse(input.fields);
+    } catch (e) {
+      throw new Error('JSON parse error. "fields" input is invalid.');
+    }
   }
 
   if (input.footer == '') {
@@ -81,7 +89,11 @@ async function run(input) {
   }
 
   if (input.actions != '') {
-    input.actions = JSON.parse(input.actions);
+    try {
+      input.actions = JSON.parse(input.actions);
+    } catch (e) {
+      throw new Error('JSON parse error. "actions" input is invalid.');
+    }
   }
 
   let attachments;
