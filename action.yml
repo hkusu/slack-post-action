@@ -40,6 +40,7 @@ inputs:
     required: false
   fields:
     description: ''
+    default: '[]'
     required: false
   image:
     description: ''
@@ -49,16 +50,30 @@ inputs:
     required: false
   footer:
     description: ''
+    default: <${{ github.event.repository.html_url }}|${{ github.event.repository.full_name }}>
     required: false
   footer_icon:
     description: ''
+    default: ${{ github.event.repository.owner.login }}.png
     required: false
   actions:
     description: ''
+    default: '[]'
+    required: false
+  sha:
+    description: ''
+    required: false
+  show_log_button:
+    description: ''
+    default: 'false'
     required: false
   event:
     description: ''
     default: ${{ toJson(github.event) }}
+    required: false
+  run_id:
+    description: ''
+    default: ${{ github.run_id }}
     required: false
 outputs:
   result:

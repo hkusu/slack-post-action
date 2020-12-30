@@ -26,7 +26,10 @@ if (NODE_ENV != 'local') {
     footer: core.getInput('footer'),
     footerIcon: core.getInput('footer_icon'),
     actions: core.getInput('actions'),
+    sha: core.getInput('sha'),
+    showLogButton: core.getInput('show_log_button'),
     event: core.getInput('event'),
+    runId: core.getInput('run_id'),
   };
 } else {
   const event = {
@@ -56,7 +59,10 @@ if (NODE_ENV != 'local') {
     footer: '',
     footerIcon: '',
     actions: '[{ "type": "button", "text": "Show action", "url": "https://github.com/hkusu/slack-post-action" }]',
+    sha: '',
+    showLogButton: 'true',
     event: JSON.stringify(event),
+    runId: '452397272',
   };
 }
 
@@ -72,35 +78,41 @@ async function run(input) {
     throw new Error('"event" input is invalid.');
   }
 
-  if (input.fields != '') {
-    try {
-      input.fields = JSON.parse(input.fields);
-    } catch (e) {
-      throw new Error('JSON parse error. "fields" input is invalid.');
-    }
+  try {
+    input.fields = JSON.parse(input.fields);
+  } catch (e) {
+    throw new Error('JSON parse error. "fields" input is invalid.');
   }
 
-  if (input.footer == '') {
-    input.footer = `<${input.event.repository.html_url}|${input.event.repository.full_name}>`;
+  //if (input.footer == '') {
+  //  input.footer = `<${input.event.repository.html_url}|${input.event.repository.full_name}>`;
+  //}
+
+  //if (input.footerIcon == '') {
+  //  input.footerIcon = `https://github.com/${input.event.repository.owner.login}.png`;
+  //}
+
+  try {
+    input.actions = JSON.parse(input.actions);
+  } catch (e) {
+    throw new Error('JSON parse error. "actions" input is invalid.');
   }
 
-  if (input.footerIcon == '') {
-    input.footerIcon = `https://github.com/${input.event.repository.owner.login}.png`;
+  if (input.showLogButton == 'true') {
+    input.actions.push(
+      {
+        "type": "button",
+        "text": "View log",
+        "url": `https://github.com/${input.event.repository.full_name}/actions/runs/${input.runId}`,
+      }
+    );
   }
 
-  if (input.actions != '') {
-    try {
-      input.actions = JSON.parse(input.actions);
-    } catch (e) {
-      throw new Error('JSON parse error. "actions" input is invalid.');
-    }
-  }
-
-  let attachments;
+  let attachment;
   if (input.authorName == '' && input.title == '' && input.body == '' && input.fields == '' && input.image == '' && input.thumbnail == '' && input.actions == '') {
-    attachments = {};
+    attachment = {};
   } else {
-    attachments = {
+    attachment = {
       "color": input.color,
       "author_name": input.authorName,
       "author_link": input.authorLink,
@@ -123,7 +135,7 @@ async function run(input) {
     "username": input.userName,
     "icon_url": input.userIcon,
     "text": input.message,
-    "attachments": [attachments]
+    "attachments": [attachment]
   };
 
   const res = await axios({
