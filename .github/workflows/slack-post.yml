@@ -3,6 +3,8 @@ name: Slack Post
 on:
   pull_request:
   push:
+    branches:
+      - master
 
 jobs:
   post:
@@ -15,6 +17,15 @@ jobs:
         run: echo "$GITHUB_CONTEXT"
       - name: Check out
         uses: actions/checkout@v2
+      - name: Create SHA info
+        id: sha-info
+        run: |
+          if [[ '${{ github.event_name }}' == 'pull_request' ]]; then
+            sha = '${{ github.event.pull_request.head.sha }}'
+          elif [[ '${{ github.event_name }}' == 'push' ]]; then
+            sha = '${{ github.sha }}'
+          fi
+          echo "::set-output name=sha::$sha"
       - name: Use this action
         uses: ./
         id: post
@@ -24,7 +35,7 @@ jobs:
           channel: 'CCU1QA6HL'
           message: 'Hello World!'
           log_button: 'View log'
-          sha: ${{ github.sha }}
+          sha: ${{ steps.sha-info.outputs.sha }}
       - name: Show result
         if: always()
         run: echo '${{ steps.post.outputs.result }}'
