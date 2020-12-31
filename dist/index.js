@@ -388,11 +388,17 @@ async function run(input) {
     throw new Error('"event" input is invalid.');
   }
 
+  console.log(input.fields);
+
   try {
     input.fields = JSON.parse(input.fields);
   } catch (e) {
     throw new Error('JSON parse error. "fields" input is invalid.');
   }
+
+  console.log('=============================');
+
+  console.log(input.fields);
 
   try {
     input.actions = JSON.parse(input.actions);

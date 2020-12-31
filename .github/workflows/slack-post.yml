@@ -36,6 +36,19 @@ jobs:
           message: 'Hello World!'
           log_button: 'View log'
           sha: ${{ steps.sha-info.outputs.sha }}
+          fields: |
+            [
+              {
+                "title": "Action1",
+                "value": "my action1",
+                "short": true
+              },
+              {
+                "title": "Action2",
+                "value": "my action2",
+                "short": true
+              }
+            ]
       - name: Show result
         if: always()
         run: echo '${{ steps.post.outputs.result }}'
