@@ -60,12 +60,11 @@ inputs:
     description: ''
     default: '[]'
     required: false
-  sha:
+  log_button:
     description: ''
     required: false
-  show_log_button:
+  sha:
     description: ''
-    default: 'false'
     required: false
   event:
     description: ''
@@ -74,6 +73,10 @@ inputs:
   run_id:
     description: ''
     default: ${{ github.run_id }}
+    required: false
+  github_token:
+    description: ''
+    default: ${{ github.token }}
     required: false
 outputs:
   result:

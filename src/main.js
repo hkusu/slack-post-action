@@ -5,6 +5,8 @@ const NODE_ENV = process.env['NODE_ENV'];
 
 // If you want to run it locally, set the environment variables like `$ export SLACK_APP_TOKEN=<your token>`
 const SLACK_APP_TOKEN = process.env['SLACK_APP_TOKEN'];
+// If you want to run it locally, set the environment variables like `$ export GITHUB_TOKEN=<your token>`
+const GITHUB_TOKEN = process.env['GITHUB_TOKEN'];
 
 let input;
 if (NODE_ENV != 'local') {
@@ -26,10 +28,11 @@ if (NODE_ENV != 'local') {
     footer: core.getInput('footer'),
     footerIcon: core.getInput('footer_icon'),
     actions: core.getInput('actions'),
+    logButton: core.getInput('log_button'),
     sha: core.getInput('sha'),
-    showLogButton: core.getInput('show_log_button'),
     event: core.getInput('event'),
     runId: core.getInput('run_id'),
+    githubToken: core.getInput('github_token'),
   };
 } else {
   const event = {
@@ -59,10 +62,11 @@ if (NODE_ENV != 'local') {
     footer: '',
     footerIcon: '',
     actions: '[{ "type": "button", "text": "Show action", "url": "https://github.com/hkusu/slack-post-action" }]',
-    sha: '',
-    showLogButton: 'true',
+    logButton: 'View log',
+    sha: 'ab93905de7446d2d80db7ee68eed0e13f7288bd9',
     event: JSON.stringify(event),
     runId: '452397272',
+    githubToken: GITHUB_TOKEN,
   };
 }
 
@@ -90,14 +94,39 @@ async function run(input) {
     throw new Error('JSON parse error. "actions" input is invalid.');
   }
 
-  if (input.showLogButton == 'true') {
+  if (input.logButton) {
     input.actions.push(
       {
         "type": "button",
-        "text": "View log",
+        "text": input.logButton,
         "url": `https://github.com/${input.event.repository.full_name}/actions/runs/${input.runId}`,
       }
     );
+  }
+
+  if (input.sha) {
+    try {
+      const res = await axios({
+        url: `https://api.github.com/repos/${input.event.repository.full_name}/git/commits/${input.sha}`,
+        headers: {
+          'Authorization': `token ${input.githubToken}`,
+        },
+      });
+      input.authorName = res.data.author.name;
+      input.authorLink = '';
+      input.authorIcon = '';
+      // TODO 1行目のみにする＆shaの表示
+      input.title = res.data.message;
+      input.titleLink = `https://github.com/${input.event.repository.full_name}/commit/${input.sha}`;
+      // TODO ここにcommitメッセージの二行目以降を表示する？
+      input.body = '';
+    } catch (e) {
+      if (e.response.status == 404) {
+        throw new Error('Commit data not found. "sha" input may not be correct.');
+      } else {
+        throw new Error(`GitHub API error (message: ${e.message}).`);
+      }
+    }
   }
 
   let attachment;

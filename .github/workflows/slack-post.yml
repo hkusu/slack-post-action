@@ -23,7 +23,8 @@ jobs:
         with:
           channel: 'CCU1QA6HL'
           message: 'Hello World!'
-          body: 'This is body.'
+          log_button: 'View log'
+          sha: ${{ github.sha }}
       - name: Show result
         if: always()
         run: echo '${{ steps.post.outputs.result }}'
