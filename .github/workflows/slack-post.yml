@@ -21,9 +21,9 @@ jobs:
         id: sha-info
         run: |
           if [[ '${{ github.event_name }}' == 'pull_request' ]]; then
-            sha = '${{ github.event.pull_request.head.sha }}'
+            sha='${{ github.event.pull_request.head.sha }}'
           elif [[ '${{ github.event_name }}' == 'push' ]]; then
-            sha = '${{ github.sha }}'
+            sha='${{ github.sha }}'
           fi
           echo "::set-output name=sha::$sha"
       - name: Use this action
