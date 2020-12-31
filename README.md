@@ -31,10 +31,29 @@ All inputs except `channel` are **optional**, so use only the inputs you want to
     title: 'This is title'
     title_link: 'https://github.com/hkusu/slack-post-action'
     body: 'This is body'
-    fields: '[{ "title": "Action1", "value": "my action1", "short": true }, { "title": "Action2", "value": "my action2", "short": true }]'
+    fields: |
+      [
+        { 
+          "title": "Action1",
+          "value": "my action1",
+          "short": true
+        },
+        {
+          "title": "Action2",
+          "value": "my action2",
+          "short": true
+        }
+      ]
     footer: 'my action' # default: repository name
     footer_icon: 'https://github.com/hkusu.png' # default: repository owner image
-    actions: '[{ "type": "button", "text": "Show action", "url": "https://github.com/hkusu/slack-post-action" }]'
+    actions: |
+      [
+        { 
+          "type": "button",
+          "text": "Show action",
+          "url": "https://github.com/hkusu/slack-post-action"
+        }
+      ]
 ```
 
 ![image](./doc/image.png)

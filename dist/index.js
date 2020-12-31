@@ -311,6 +311,8 @@ const NODE_ENV = process.env['NODE_ENV'];
 
 // If you want to run it locally, set the environment variables like `$ export SLACK_APP_TOKEN=<your token>`
 const SLACK_APP_TOKEN = process.env['SLACK_APP_TOKEN'];
+// If you want to run it locally, set the environment variables like `$ export GITHUB_TOKEN=<your token>`
+const GITHUB_TOKEN = process.env['GITHUB_TOKEN'];
 
 let input;
 if (NODE_ENV != 'local') {
@@ -332,7 +334,11 @@ if (NODE_ENV != 'local') {
     footer: core.getInput('footer'),
     footerIcon: core.getInput('footer_icon'),
     actions: core.getInput('actions'),
+    logButton: core.getInput('log_button'),
+    sha: core.getInput('sha'),
     event: core.getInput('event'),
+    runId: core.getInput('run_id'),
+    githubToken: core.getInput('github_token'),
   };
 } else {
   const event = {
@@ -362,7 +368,11 @@ if (NODE_ENV != 'local') {
     footer: '',
     footerIcon: '',
     actions: '[{ "type": "button", "text": "Show action", "url": "https://github.com/hkusu/slack-post-action" }]',
+    logButton: 'View log',
+    sha: '071fe23998cba0da8123ddc6bbf43041218f5b2b',
     event: JSON.stringify(event),
+    runId: '452397272',
+    githubToken: GITHUB_TOKEN,
   };
 }
 
@@ -378,35 +388,62 @@ async function run(input) {
     throw new Error('"event" input is invalid.');
   }
 
-  if (input.fields != '') {
+  try {
+    input.fields = JSON.parse(input.fields);
+  } catch (e) {
+    throw new Error('JSON parse error. "fields" input is invalid.');
+  }
+
+  try {
+    input.actions = JSON.parse(input.actions);
+  } catch (e) {
+    throw new Error('JSON parse error. "actions" input is invalid.');
+  }
+
+  if (input.logButton) {
+    input.actions.push(
+      {
+        "type": "button",
+        "text": input.logButton,
+        "url": `https://github.com/${input.event.repository.full_name}/actions/runs/${input.runId}`,
+      }
+    );
+  }
+
+  if (input.sha) {
     try {
-      input.fields = JSON.parse(input.fields);
+      const res = await axios({
+        url: `https://api.github.com/repos/${input.event.repository.full_name}/git/commits/${input.sha}`,
+        headers: {
+          'Authorization': `token ${input.githubToken}`,
+        },
+      });
+      input.authorName = res.data.author.name;
+      input.authorLink = '';
+      input.authorIcon = '';
+      const messages = res.data.message.split('\n');
+      input.title = `${messages[0]} (${input.sha.slice(0, 8)})`;
+      input.titleLink = `https://github.com/${input.event.repository.full_name}/commit/${input.sha}`;
+      if (messages.length == 1) {
+        input.body = '';
+      } else {
+        messages.splice(0, 1); // delete first line message
+        input.body = messages.join('\n');
+      }
     } catch (e) {
-      throw new Error('JSON parse error. "fields" input is invalid.');
+      if (e.response.status == 404) {
+        throw new Error('Commit data not found. "sha" input may not be correct.');
+      } else {
+        throw new Error(`GitHub API error (message: ${e.message}).`);
+      }
     }
   }
 
-  if (input.footer == '') {
-    input.footer = `<${input.event.repository.html_url}|${input.event.repository.full_name}>`;
-  }
-
-  if (input.footerIcon == '') {
-    input.footerIcon = `https://github.com/${input.event.repository.owner.login}.png`;
-  }
-
-  if (input.actions != '') {
-    try {
-      input.actions = JSON.parse(input.actions);
-    } catch (e) {
-      throw new Error('JSON parse error. "actions" input is invalid.');
-    }
-  }
-
-  let attachments;
+  let attachment;
   if (input.authorName == '' && input.title == '' && input.body == '' && input.fields == '' && input.image == '' && input.thumbnail == '' && input.actions == '') {
-    attachments = {};
+    attachment = {};
   } else {
-    attachments = {
+    attachment = {
       "color": input.color,
       "author_name": input.authorName,
       "author_link": input.authorLink,
@@ -429,7 +466,7 @@ async function run(input) {
     "username": input.userName,
     "icon_url": input.userIcon,
     "text": input.message,
-    "attachments": [attachments]
+    "attachments": [attachment]
   };
 
   const res = await axios({
