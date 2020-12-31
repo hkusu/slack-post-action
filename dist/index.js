@@ -369,7 +369,7 @@ if (NODE_ENV != 'local') {
     footerIcon: '',
     actions: '[{ "type": "button", "text": "Show action", "url": "https://github.com/hkusu/slack-post-action" }]',
     logButton: 'View log',
-    sha: 'ab93905de7446d2d80db7ee68eed0e13f7288bd9',
+    sha: '071fe23998cba0da8123ddc6bbf43041218f5b2b',
     event: JSON.stringify(event),
     runId: '452397272',
     githubToken: GITHUB_TOKEN,
@@ -421,11 +421,15 @@ async function run(input) {
       input.authorName = res.data.author.name;
       input.authorLink = '';
       input.authorIcon = '';
-      // TODO 1行目のみにする＆shaの表示
-      input.title = res.data.message;
+      const messages = res.data.message.split('\n');
+      input.title = `${messages[0]} (${input.sha.slice(0, 8)})`;
       input.titleLink = `https://github.com/${input.event.repository.full_name}/commit/${input.sha}`;
-      // TODO ここにcommitメッセージの二行目以降を表示する？
-      input.body = '';
+      if (messages.length == 1) {
+        input.body = '';
+      } else {
+        messages.splice(0, 1); // delete first line message
+        input.body = messages.join('\n');
+      }
     } catch (e) {
       if (e.response.status == 404) {
         throw new Error('Commit data not found. "sha" input may not be correct.');
