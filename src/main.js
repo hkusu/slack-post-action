@@ -29,11 +29,39 @@ if (NODE_ENV != 'local') {
     footerIcon: core.getInput('footer_icon'),
     actions: core.getInput('actions'),
     logButton: core.getInput('log_button'),
-    sha: core.getInput('sha'),
+    reportSha: core.getInput('sha'),
     event: core.getInput('event'),
-    runId: core.getInput('run_id'),
-    githubToken: core.getInput('github_token'),
+    runId: core.getInput('run-id'),
+    githubToken: core.getInput('github-token'),
   };
+  // v2までの後方五感
+  if (core.getInput('user-name')) {
+    input.userName = core.getInput('user-name')
+  }
+  if (core.getInput('user-icon')) {
+    input.userIcon = core.getInput('user-icon')
+  }
+  if (core.getInput('author-name')) {
+    input.authorName = core.getInput('author-name')
+  }
+  if (core.getInput('author-link')) {
+    input.authorLink = core.getInput('author-link')
+  }
+  if (core.getInput('author-icon')) {
+    input.authorIcon = core.getInput('author-icon')
+  }
+  if (core.getInput('title-link')) {
+    input.titleLink = core.getInput('title-link')
+  }
+  if (core.getInput('footer_icon') != core.getInput('footer-icon')) {
+    input.footerIcon = core.getInput('footer-icon')
+  }
+  if (core.getInput('log-button')) {
+    input.logButton = core.getInput('log-button')
+  }
+  if (core.getInput('report-sha')) {
+    input.reportSha = core.getInput('report-sha')
+  }
 } else {
   const event = {
     repository: {
@@ -63,7 +91,7 @@ if (NODE_ENV != 'local') {
     footerIcon: '',
     actions: '[{ "type": "button", "text": "Show action", "url": "https://github.com/hkusu/slack-post-action" }]',
     logButton: 'View log',
-    sha: '071fe23998cba0da8123ddc6bbf43041218f5b2b',
+    reportSha: '071fe23998cba0da8123ddc6bbf43041218f5b2b',
     event: JSON.stringify(event),
     runId: '452397272',
     githubToken: GITHUB_TOKEN,
@@ -104,10 +132,10 @@ async function run(input) {
     );
   }
 
-  if (input.sha) {
+  if (input.reportSha) {
     try {
       const res = await axios({
-        url: `https://api.github.com/repos/${input.event.repository.full_name}/git/commits/${input.sha}`,
+        url: `https://api.github.com/repos/${input.event.repository.full_name}/git/commits/${input.reportSha}`,
         headers: {
           'Authorization': `token ${input.githubToken}`,
         },
@@ -116,8 +144,8 @@ async function run(input) {
       input.authorLink = '';
       input.authorIcon = '';
       const messages = res.data.message.split('\n');
-      input.title = `${messages[0]} (${input.sha.slice(0, 8)})`;
-      input.titleLink = `https://github.com/${input.event.repository.full_name}/commit/${input.sha}`;
+      input.title = `${messages[0]} (${input.reportSha.slice(0, 8)})`;
+      input.titleLink = `https://github.com/${input.event.repository.full_name}/commit/${input.reportSha}`;
       if (messages.length == 1) {
         input.body = '';
       } else {

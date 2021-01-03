@@ -34,8 +34,8 @@ jobs:
         with:
           channel: 'CCU1QA6HL'
           message: 'Hello World!'
-          log_button: 'View log'
-          sha: ${{ steps.sha-info.outputs.sha }}
+          log-button: 'View log'
+          report-sha: ${{ steps.sha-info.outputs.sha }}
       - name: Show result
         if: always()
         run: echo '${{ steps.post.outputs.result }}'
