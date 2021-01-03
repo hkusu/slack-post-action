@@ -22,14 +22,14 @@ All inputs except `channel` are **optional**, so use only the inputs you want to
   with:
     channel: 'my-greeting-channel'
     message: 'Hello!'
-    user_name: 'GitHub Actions'
-    user_icon: 'https://github.com/actions.png?size=48'
+    user-name: 'GitHub Actions'
+    user-icon: 'https://github.com/actions.png?size=48'
     color: 'good' # good or warning or danger or hex color code like #ffaabb
-    author_name: 'hkusu'
-    author_link: 'https://github.com/hkusu'
-    author_icon: 'https://github.com/hkusu.png'
+    author-name: 'hkusu'
+    author-link: 'https://github.com/hkusu'
+    author-icon: 'https://github.com/hkusu.png'
     title: 'This is title'
-    title_link: 'https://github.com/hkusu/slack-post-action'
+    title-link: 'https://github.com/hkusu/slack-post-action'
     body: 'This is body'
     fields: |
       [
@@ -45,7 +45,7 @@ All inputs except `channel` are **optional**, so use only the inputs you want to
         }
       ]
     footer: 'my action' # default: repository name
-    footer_icon: 'https://github.com/hkusu.png' # default: repository owner image
+    footer-icon: 'https://github.com/hkusu.png' # default: repository owner image
     actions: |
       [
         { 

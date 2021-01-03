@@ -14,7 +14,13 @@ inputs:
   user_name:
     description: ''
     required: false
+  user-name:
+    description: ''
+    required: false
   user_icon:
+    description: ''
+    required: false
+  user-icon:
     description: ''
     required: false
   color:
@@ -23,16 +29,28 @@ inputs:
   author_name:
     description: ''
     required: false
+  author-name:
+    description: ''
+    required: false
   author_link:
     description: ''
     required: false
+  author-link:
+    description: ''
+    required: false
   author_icon:
+    description: ''
+    required: false
+  author-icon:
     description: ''
     required: false
   title:
     description: ''
     required: false
   title_link:
+    description: ''
+    required: false
+  title-link:
     description: ''
     required: false
   body:
@@ -56,6 +74,10 @@ inputs:
     description: ''
     default: https://github.com/${{ github.event.repository.owner.login }}.png
     required: false
+  footer-icon:
+    description: ''
+    default: https://github.com/${{ github.event.repository.owner.login }}.png
+    required: false
   actions:
     description: ''
     default: '[]'
@@ -63,18 +85,24 @@ inputs:
   log_button:
     description: ''
     required: false
+  log-button:
+    description: ''
+    required: false
   sha:
+    description: ''
+    required: false
+  report-sha:
     description: ''
     required: false
   event:
     description: ''
     default: ${{ toJson(github.event) }}
     required: false
-  run_id:
+  run-id:
     description: ''
     default: ${{ github.run_id }}
     required: false
-  github_token:
+  github-token:
     description: ''
     default: ${{ github.token }}
     required: false
