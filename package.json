@@ -1,6 +1,6 @@
 {
   "name": "slack-post-action",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "This is a GitHub Action to post to Slack.",
   "main": "src/main.js",
   "author": "Hiroyuki Kusu <kusu0806@gmail.com>",

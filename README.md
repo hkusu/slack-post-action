@@ -1,8 +1,10 @@
 # Slack Post Action
 
-This is a GitHub Action to post to Slack.
+GitHub Action to post a message to Slack.
 
 ## Usage
+
+### Basic usage
 
 ```yaml
 - uses: hkusu/slack-post-action@v1
@@ -10,7 +12,7 @@ This is a GitHub Action to post to Slack.
     SLACK_APP_TOKEN: ${{ secrets.SLACK_APP_TOKEN }} # your slack app token
   with:
     channel: 'my-greeting-channel'
-    message: 'Hello!'
+    message: 'Hello World!'
 ```
 
 All inputs except `channel` are **optional**, so use only the inputs you want to use:
@@ -21,7 +23,7 @@ All inputs except `channel` are **optional**, so use only the inputs you want to
     SLACK_APP_TOKEN: ${{ secrets.SLACK_APP_TOKEN }}
   with:
     channel: 'my-greeting-channel'
-    message: 'Hello!'
+    message: 'Hello World!'
     user-name: 'GitHub Actions'
     user-icon: 'https://github.com/actions.png?size=48'
     color: 'good' # good or warning or danger or hex color code like #ffaabb
@@ -60,9 +62,60 @@ All inputs except `channel` are **optional**, so use only the inputs you want to
 
 You can also use `image` or `thumbnail` for input. See also https://api.slack.com/reference/messaging/attachments .
 
-### Result of action
+### Additional features
 
-Use `result` outputs.
+#### Report commit SHA information
+
+Specify some commit SHA for `report-sha` input. 
+
+```yaml
+- uses: hkusu/slack-post-action@v1
+  env:
+    SLACK_APP_TOKEN: ${{ secrets.SLACK_APP_TOKEN }}
+  with:
+    channel: 'my-greeting-channel'
+    message: 'Hello World!'
+    report-sha: ${{ github.sha }} # Specify some commit SHA
+```
+
+it is useful in workflow results reports for git push.
+
+#### Report pull result information
+
+Specify some pull request number for `report-pr-number` input. 
+
+```yaml
+- uses: hkusu/slack-post-action@v1
+  env:
+    SLACK_APP_TOKEN: ${{ secrets.SLACK_APP_TOKEN }}
+  with:
+    channel: 'my-greeting-channel'
+    message: 'Hello World!'
+    report-pr-number: ${{ github.event.pull_request.number }} # Specify some pull request number
+```
+
+It is useful in workflow result reports on pull requests.
+
+#### Show log button
+
+If you specify the name of the button in `log-button` input, the button will be displayed.
+
+```yaml
+- uses: hkusu/slack-post-action@v1
+  env:
+    SLACK_APP_TOKEN: ${{ secrets.SLACK_APP_TOKEN }}
+  with:
+    channel: 'my-greeting-channel'
+    message: 'Hello World!'
+    log-button: 'View log' # Specify button name
+```
+
+That button links to the result of the workflow, eg `https://github.com/hkusu/slack-post-action/actions/runs/804117290`.
+Useful for posting when workflow fails.
+
+### Result of this action
+
+Use `result` outputs. Useful for using the results of this action in subsequent steps.
 
 ```yaml
 - uses: hkusu/slack-post-action@v1

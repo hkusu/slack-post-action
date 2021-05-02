@@ -1,5 +1,5 @@
 name: 'Slack Post Action'
-description: 'This is a GitHub Action to post to Slack.'
+description: 'GitHub Action to post a message to Slack.'
 author: 'Hiroyuki Kusu'
 branding:
   icon: 'bell'
@@ -92,6 +92,9 @@ inputs:
     description: ''
     required: false
   report-sha:
+    description: ''
+    required: false
+  report-pr-number:
     description: ''
     required: false
   event:
