@@ -15,6 +15,8 @@ GitHub Action to post a message to Slack.
     message: 'Hello World!'
 ```
 
+![image](doc/image1.png)
+
 All inputs except `channel` are **optional**, so use only the inputs you want to use:
 
 ```yaml
@@ -58,7 +60,7 @@ All inputs except `channel` are **optional**, so use only the inputs you want to
       ]
 ```
 
-![image](./doc/image.png)
+![image](doc/image2.png)
 
 You can also use `image` or `thumbnail` for input. See also https://api.slack.com/reference/messaging/attachments .
 
@@ -78,6 +80,8 @@ Specify some commit SHA for `report-sha` input.
     report-sha: ${{ github.sha }} # Specify some commit SHA
 ```
 
+![image](doc/image3.png)
+
 it is useful in workflow results reports for git push.
 
 #### Report pull result information
@@ -94,6 +98,8 @@ Specify some pull request number for `report-pr-number` input.
     report-pr-number: ${{ github.event.pull_request.number }} # Specify some pull request number
 ```
 
+![image](doc/image4.png)
+
 It is useful in workflow result reports on pull requests.
 
 #### Show log button
@@ -109,6 +115,8 @@ If you specify the name of the button in `log-button` input, the button will be 
     message: 'Hello World!'
     log-button: 'View log' # Specify button name
 ```
+
+![image](doc/image5.png)
 
 That button links to the result of the workflow, eg `https://github.com/hkusu/slack-post-action/actions/runs/804117290`.
 Useful for posting when workflow fails.
