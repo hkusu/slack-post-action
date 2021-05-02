@@ -15,7 +15,7 @@ GitHub Action to post a message to Slack.
     message: 'Hello World!'
 ```
 
-Posted to Slack as follows:
+In this example, only `message` is posted to Slack.
 
 ![image](doc/image1.png)
 
@@ -84,7 +84,7 @@ Specify some commit SHA for `report-sha` input.
 
 ![image](doc/image3.png)
 
-it is useful in workflow results reports for git push.
+it is useful in workflow results reports for specific code commits.
 
 #### Report pull result information
 
