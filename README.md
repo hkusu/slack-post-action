@@ -15,6 +15,8 @@ GitHub Action to post a message to Slack.
     message: 'Hello World!'
 ```
 
+Posted to Slack as follows:
+
 ![image](doc/image1.png)
 
 All inputs except `channel` are **optional**, so use only the inputs you want to use:
