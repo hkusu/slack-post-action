@@ -30,6 +30,7 @@ if (NODE_ENV != 'local') {
     actions: core.getInput('actions'),
     logButton: core.getInput('log_button'),
     reportSha: core.getInput('sha'),
+    reportPrNumber: core.getInput('report-pr-number'),
     event: core.getInput('event'),
     runId: core.getInput('run-id'),
     githubToken: core.getInput('github-token'),
@@ -92,6 +93,7 @@ if (NODE_ENV != 'local') {
     actions: '[{ "type": "button", "text": "Show action", "url": "https://github.com/hkusu/slack-post-action" }]',
     logButton: 'View log',
     reportSha: '071fe23998cba0da8123ddc6bbf43041218f5b2b',
+    reportPrNumber: '3',
     event: JSON.stringify(event),
     runId: '452397272',
     githubToken: GITHUB_TOKEN,
@@ -154,7 +156,27 @@ async function run(input) {
       }
     } catch (e) {
       if (e.response.status == 404) {
-        throw new Error('Commit data not found. "sha" input may not be correct.');
+        throw new Error('Commit data not found. "report-sha" input may not be correct.');
+      } else {
+        throw new Error(`GitHub API error (message: ${e.message}).`);
+      }
+    }
+  } else if (input.reportPrNumber) {
+    try {
+      const res = await axios({
+        url: `https://api.github.com/repos/${input.event.repository.full_name}/pulls/${input.reportPrNumber}`,
+        headers: {
+          'Authorization': `token ${input.githubToken}`,
+        },
+      });
+      input.authorName = res.data.user.login;
+      input.authorLink = res.data.user.html_url;
+      input.authorIcon = res.data.user.avatar_url;
+      input.title = res.data.title;
+      input.titleLink = res.data.html_url;
+    } catch (e) {
+      if (e.response.status == 404) {
+        throw new Error('Pull request not found. "report-pr-number" input may not be correct.');
       } else {
         throw new Error(`GitHub API error (message: ${e.message}).`);
       }

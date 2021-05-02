@@ -94,6 +94,9 @@ inputs:
   report-sha:
     description: ''
     required: false
+  report-pr-number:
+    description: ''
+    required: false
   event:
     description: ''
     default: ${{ toJson(github.event) }}
