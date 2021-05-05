@@ -70,7 +70,7 @@ You can also use `image` or `thumbnail` for input. See also https://api.slack.co
 
 #### Report commit SHA information
 
-Specify some commit SHA for `report-sha` input. 
+Specify commit SHA for `report-sha` input. 
 
 ```yaml
 - uses: hkusu/slack-post-action@v1
@@ -79,16 +79,16 @@ Specify some commit SHA for `report-sha` input.
   with:
     channel: 'my-greeting-channel'
     message: 'Hello World!'
-    report-sha: ${{ github.sha }} # Specify some commit SHA
+    report-sha: '66cde374d7b134a4bbd099833ae7892756bca23a'
 ```
 
 ![image](doc/image3.png)
 
-it is useful in workflow results reports for specific code commits.
+It is useful in workflow results reports for specific code commits.
 
 #### Report pull result information
 
-Specify some pull request number for `report-pr-number` input. 
+Specify pull request number for `report-pr-number` input. 
 
 ```yaml
 - uses: hkusu/slack-post-action@v1
@@ -97,7 +97,7 @@ Specify some pull request number for `report-pr-number` input.
   with:
     channel: 'my-greeting-channel'
     message: 'Hello World!'
-    report-pr-number: ${{ github.event.pull_request.number }} # Specify some pull request number
+    report-pr-number: 99
 ```
 
 ![image](doc/image4.png)
@@ -115,13 +115,27 @@ If you specify the name of the button in `log-button` input, the button will be 
   with:
     channel: 'my-greeting-channel'
     message: 'Hello World!'
-    log-button: 'View log' # Specify button name
+    log-button: 'View log' # Specify any button name
 ```
 
 ![image](doc/image5.png)
 
 That button links to the result of the workflow, eg `https://github.com/hkusu/slack-post-action/actions/runs/804117290`.
 Useful for posting when workflow fails.
+
+#### Reply to parent's message
+
+Specify the posting timestamp of the parent's message for `thread-timestamp` input.
+
+```yaml
+- uses: hkusu/slack-post-action@v1
+  env:
+    SLACK_APP_TOKEN: ${{ secrets.SLACK_APP_TOKEN }}
+  with:
+    channel: 'my-greeting-channel'
+    message: 'Hello World!'
+    thread-timestamp: 1620200178.000200
+```
 
 ### Result of this action
 
@@ -137,8 +151,12 @@ Use `result` outputs. Useful for using the results of this action in subsequent 
     message: 'Hello!'
 - name: Show result
   if: always()
-  run: echo '${{ steps.slack.outputs.result }}' # success or failure
+  run: |
+    echo '${{ steps.slack.outputs.result }}' # success or failure
+    echo '${{ steps.slack.outputs.timestamp }}'
 ```
+
+`timestamp` can be used to reply.
 
 ## License
 
