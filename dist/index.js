@@ -337,6 +337,7 @@ if (NODE_ENV != 'local') {
     logButton: core.getInput('log_button'),
     reportSha: core.getInput('sha'),
     reportPrNumber: core.getInput('report-pr-number'),
+    threadTimestamp: core.getInput('thread-timestamp'),
     event: core.getInput('event'),
     runId: core.getInput('run-id'),
     githubToken: core.getInput('github-token'),
@@ -400,6 +401,7 @@ if (NODE_ENV != 'local') {
     logButton: 'View log',
     reportSha: '071fe23998cba0da8123ddc6bbf43041218f5b2b',
     reportPrNumber: '3',
+    threadTimestamp: '',
     event: JSON.stringify(event),
     runId: '452397272',
     githubToken: GITHUB_TOKEN,
@@ -516,7 +518,8 @@ async function run(input) {
     "username": input.userName,
     "icon_url": input.userIcon,
     "text": input.message,
-    "attachments": [attachment]
+    "attachments": [attachment],
+    'thread_ts': input.threadTimestamp,
   };
 
   const res = await axios({
@@ -533,6 +536,7 @@ async function run(input) {
   if (!res.data.ok) {
     throw new Error(`Slack API error (message: ${res.data.error}).`);
   }
+  core.setOutput('timestamp', res.data.ts);
 }
 
 run(input)

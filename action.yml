@@ -97,6 +97,9 @@ inputs:
   report-pr-number:
     description: ''
     required: false
+  thread-timestamp:
+    description: ''
+    required: false
   event:
     description: ''
     default: ${{ toJson(github.event) }}
