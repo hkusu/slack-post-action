@@ -75,7 +75,7 @@ if (NODE_ENV != 'local') {
     },
   };
   input = {
-    channel: 'CCU1QA6HL',
+    channel: 'github_test',
     message: 'Hello World!',
     userName: 'GitHub Actions',
     userIcon: 'https://github.com/actions.png?size=48',
@@ -139,17 +139,17 @@ async function run(input) {
   if (input.reportSha) {
     try {
       const res = await axios({
-        url: `https://api.github.com/repos/${input.event.repository.full_name}/git/commits/${input.reportSha}`,
+        url: `https://api.github.com/repos/${input.event.repository.full_name}/commits/${input.reportSha}`,
         headers: {
           'Authorization': `token ${input.githubToken}`,
         },
       });
-      input.authorName = res.data.author.name;
-      input.authorLink = '';
-      input.authorIcon = '';
-      const messages = res.data.message.split('\n');
-      input.title = `${messages[0]} (${input.reportSha.slice(0, 8)})`;
-      input.titleLink = `https://github.com/${input.event.repository.full_name}/commit/${input.reportSha}`;
+      input.authorName = res.data.author.login;
+      input.authorLink = res.data.author.html_url;
+      input.authorIcon = res.data.author.avatar_url;
+      const messages = res.data.commit.message.split('\n');
+      input.title = `${messages[0]} (${res.data.sha.slice(0, 8)})`;
+      input.titleLink = res.data.html_url;
       if (messages.length == 1) {
         input.body = '';
       } else {
