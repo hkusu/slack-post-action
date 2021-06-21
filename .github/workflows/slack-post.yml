@@ -19,7 +19,7 @@ jobs:
         env:
           SLACK_APP_TOKEN: ${{ secrets.SLACK_APP_TOKEN }}
         with:
-          channel: 'CCU1QA6HL'
+          channel: 'github_test'
           message: 'Hello World!'
           log-button: 'View log'
           report-sha: ${{ github.sha }}

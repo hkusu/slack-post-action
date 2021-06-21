@@ -174,7 +174,7 @@ async function run(input) {
       input.authorName = res.data.user.login;
       input.authorLink = res.data.user.html_url;
       input.authorIcon = res.data.user.avatar_url;
-      input.title = res.data.title;
+      input.title = `#${res.data.number} ${res.data.title}`;
       input.titleLink = res.data.html_url;
     } catch (e) {
       if (e.response.status == 404) {
