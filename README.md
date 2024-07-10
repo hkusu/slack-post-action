@@ -7,7 +7,7 @@ GitHub Action to post a message to Slack.
 ### Basic usage
 
 ```yaml
-- uses: hkusu/slack-post-action@v1
+- uses: hkusu/slack-post-action@v2
   env:
     SLACK_APP_TOKEN: ${{ secrets.SLACK_APP_TOKEN }} # your slack app token
   with:
@@ -22,7 +22,7 @@ In this example, only `message` is posted to Slack.
 All inputs except `channel` are **optional**, so use only the inputs you want to use:
 
 ```yaml
-- uses: hkusu/slack-post-action@v1
+- uses: hkusu/slack-post-action@v2
   env:
     SLACK_APP_TOKEN: ${{ secrets.SLACK_APP_TOKEN }}
   with:
@@ -73,7 +73,7 @@ You can also use `image` or `thumbnail` for input. See also https://api.slack.co
 Specify commit SHA for `report-sha` input. 
 
 ```yaml
-- uses: hkusu/slack-post-action@v1
+- uses: hkusu/slack-post-action@v2
   env:
     SLACK_APP_TOKEN: ${{ secrets.SLACK_APP_TOKEN }}
   with:
@@ -91,7 +91,7 @@ It is useful in workflow results reports for specific code commits.
 Specify pull request number for `report-pr-number` input. 
 
 ```yaml
-- uses: hkusu/slack-post-action@v1
+- uses: hkusu/slack-post-action@v2
   env:
     SLACK_APP_TOKEN: ${{ secrets.SLACK_APP_TOKEN }}
   with:
@@ -109,7 +109,7 @@ It is useful in workflow result reports on pull requests.
 If you specify the name of the button in `log-button` input, the button will be displayed.
 
 ```yaml
-- uses: hkusu/slack-post-action@v1
+- uses: hkusu/slack-post-action@v2
   env:
     SLACK_APP_TOKEN: ${{ secrets.SLACK_APP_TOKEN }}
   with:
@@ -128,7 +128,7 @@ Useful for posting when workflow fails.
 Specify the posting timestamp of the parent's message for `thread-timestamp` input.
 
 ```yaml
-- uses: hkusu/slack-post-action@v1
+- uses: hkusu/slack-post-action@v2
   env:
     SLACK_APP_TOKEN: ${{ secrets.SLACK_APP_TOKEN }}
   with:
@@ -142,7 +142,7 @@ Specify the posting timestamp of the parent's message for `thread-timestamp` inp
 Use `result` outputs. Useful for using the results of this action in subsequent steps.
 
 ```yaml
-- uses: hkusu/slack-post-action@v1
+- uses: hkusu/slack-post-action@v2
   id: slack # specify id
   env:
     SLACK_APP_TOKEN: ${{ secrets.SLACK_APP_TOKEN }}
