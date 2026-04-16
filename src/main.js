@@ -1,5 +1,4 @@
 const core = require('@actions/core');
-const axios = require('axios');
 
 const NODE_ENV = process.env['NODE_ENV'];
 
@@ -9,7 +8,7 @@ const SLACK_APP_TOKEN = process.env['SLACK_APP_TOKEN'];
 const GITHUB_TOKEN = process.env['GITHUB_TOKEN'];
 
 let input;
-if (NODE_ENV != 'local') {
+if (NODE_ENV !== 'local') {
   input = {
     channel: core.getInput('channel', { required: true }),
     message: core.getInput('message'),
@@ -55,7 +54,7 @@ if (NODE_ENV != 'local') {
   if (core.getInput('title-link')) {
     input.titleLink = core.getInput('title-link')
   }
-  if (core.getInput('footer_icon') != core.getInput('footer-icon')) {
+  if (core.getInput('footer_icon') !== core.getInput('footer-icon')) {
     input.footerIcon = core.getInput('footer-icon')
   }
   if (core.getInput('log-button')) {
@@ -129,108 +128,106 @@ async function run(input) {
   if (input.logButton) {
     input.actions.push(
       {
-        "type": "button",
-        "text": input.logButton,
-        "url": `https://github.com/${input.event.repository.full_name}/actions/runs/${input.runId}`,
+        'type': 'button',
+        'text': input.logButton,
+        'url': `https://github.com/${input.event.repository.full_name}/actions/runs/${input.runId}`,
       }
     );
   }
 
   if (input.reportSha) {
-    try {
-      const res = await axios({
-        url: `https://api.github.com/repos/${input.event.repository.full_name}/commits/${input.reportSha}`,
-        headers: {
-          'Authorization': `token ${input.githubToken}`,
-        },
-      });
-      input.authorName = res.data.author.login;
-      input.authorLink = res.data.author.html_url;
-      input.authorIcon = res.data.author.avatar_url;
-      const messages = res.data.commit.message.split('\n');
-      input.title = `${messages[0]} (${res.data.sha.slice(0, 8)})`;
-      input.titleLink = res.data.html_url;
-      if (messages.length == 1) {
-        input.body = '';
-      } else {
-        messages.splice(0, 1); // delete first line message
-        input.body = messages.join('\n');
-      }
-    } catch (e) {
-      if (e.response.status == 404) {
+    const res = await fetch(`https://api.github.com/repos/${input.event.repository.full_name}/commits/${input.reportSha}`, {
+      headers: {
+        'Authorization': `token ${input.githubToken}`,
+      },
+    });
+    if (!res.ok) {
+      if (res.status === 404) {
         throw new Error('Commit data not found. "report-sha" input may not be correct.');
       } else {
-        throw new Error(`GitHub API error (message: ${e.message}).`);
+        throw new Error(`GitHub API error (status: ${res.status}).`);
       }
+    }
+    const data = await res.json();
+    input.authorName = data.author.login;
+    input.authorLink = data.author.html_url;
+    input.authorIcon = data.author.avatar_url;
+    const messages = data.commit.message.split('\n');
+    input.title = `${messages[0]} (${data.sha.slice(0, 8)})`;
+    input.titleLink = data.html_url;
+    if (messages.length === 1) {
+      input.body = '';
+    } else {
+      messages.splice(0, 1); // delete first line message
+      input.body = messages.join('\n');
     }
   } else if (input.reportPrNumber) {
-    try {
-      const res = await axios({
-        url: `https://api.github.com/repos/${input.event.repository.full_name}/pulls/${input.reportPrNumber}`,
-        headers: {
-          'Authorization': `token ${input.githubToken}`,
-        },
-      });
-      input.authorName = res.data.user.login;
-      input.authorLink = res.data.user.html_url;
-      input.authorIcon = res.data.user.avatar_url;
-      input.title = `#${res.data.number} ${res.data.title}`;
-      input.titleLink = res.data.html_url;
-    } catch (e) {
-      if (e.response.status == 404) {
+    const res = await fetch(`https://api.github.com/repos/${input.event.repository.full_name}/pulls/${input.reportPrNumber}`, {
+      headers: {
+        'Authorization': `token ${input.githubToken}`,
+      },
+    });
+    if (!res.ok) {
+      if (res.status === 404) {
         throw new Error('Pull request not found. "report-pr-number" input may not be correct.');
       } else {
-        throw new Error(`GitHub API error (message: ${e.message}).`);
+        throw new Error(`GitHub API error (status: ${res.status}).`);
       }
     }
+    const data = await res.json();
+    input.authorName = data.user.login;
+    input.authorLink = data.user.html_url;
+    input.authorIcon = data.user.avatar_url;
+    input.title = `#${data.number} ${data.title}`;
+    input.titleLink = data.html_url;
   }
 
   let attachment;
-  if (input.authorName == '' && input.title == '' && input.body == '' && input.fields == '' && input.image == '' && input.thumbnail == '' && input.actions == '') {
+  if (input.authorName === '' && input.title === '' && input.body === '' && input.fields === '' && input.image === '' && input.thumbnail === '' && input.actions === '') {
     attachment = {};
   } else {
     attachment = {
-      "color": input.color,
-      "author_name": input.authorName,
-      "author_link": input.authorLink,
-      "author_icon": input.authorIcon,
-      "title": input.title,
-      "title_link": input.titleLink,
-      "text": input.body,
-      "fields": input.fields,
-      "image_url": input.image,
-      "thumb_url": input.thumbnail,
-      "footer": input.footer,
-      "footer_icon": input.footerIcon,
-      "ts": Math.floor(new Date().getTime() / 1000),
-      "actions": input.actions,
+      'color': input.color,
+      'author_name': input.authorName,
+      'author_link': input.authorLink,
+      'author_icon': input.authorIcon,
+      'title': input.title,
+      'title_link': input.titleLink,
+      'text': input.body,
+      'fields': input.fields,
+      'image_url': input.image,
+      'thumb_url': input.thumbnail,
+      'footer': input.footer,
+      'footer_icon': input.footerIcon,
+      'ts': Math.floor(new Date().getTime() / 1000),
+      'actions': input.actions,
     };
   }
 
   const data = {
-    "channel": input.channel,
-    "username": input.userName,
-    "icon_url": input.userIcon,
-    "text": input.message,
-    "attachments": [attachment],
+    'channel': input.channel,
+    'username': input.userName,
+    'icon_url': input.userIcon,
+    'text': input.message,
+    'attachments': [attachment],
     'thread_ts': input.threadTimestamp,
   };
 
-  const res = await axios({
+  const res = await fetch('https://slack.com/api/chat.postMessage', {
     method: 'post',
-    url: 'https://slack.com/api/chat.postMessage',
-    data: data,
-    responseType: 'json',
+    body: JSON.stringify(data),
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
       'Authorization': `Bearer ${SLACK_APP_TOKEN}`,
     },
   });
 
-  if (!res.data.ok) {
-    throw new Error(`Slack API error (message: ${res.data.error}).`);
+  const resData = await res.json();
+
+  if (!resData.ok) {
+    throw new Error(`Slack API error (message: ${resData.error}).`);
   }
-  core.setOutput('timestamp', res.data.ts);
+  core.setOutput('timestamp', resData.ts);
 }
 
 run(input)

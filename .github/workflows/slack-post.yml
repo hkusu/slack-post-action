@@ -9,17 +9,17 @@ jobs:
     steps:
       - name: Dump GitHub context
         env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: echo "$GITHUB_CONTEXT"
       - name: Check out
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Use this action
         uses: ./
         id: post
         env:
           SLACK_APP_TOKEN: ${{ secrets.SLACK_APP_TOKEN }}
         with:
-          channel: 'github_test'
+          channel: ${{ secrets.SLACK_CHANNEL_ID || 'github_test' }}
           message: 'Hello World!'
           log-button: 'View log'
           report-sha: ${{ github.sha }}
